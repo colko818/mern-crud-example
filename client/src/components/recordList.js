@@ -11,15 +11,11 @@ const Record = (props) => (
     <td>{props.record.person_position}</td>
     <td>{props.record.person_level}</td>
     <td>
-      <Link to={"/edit/" + props.record._id}>Edit</Link> |
-      <a
-        href="/"
-        onClick={() => {
+      <Link to={ "/edit/" + props.record._id }>Edit</Link> |
+      <Link to={ "/" } onClick= { () => {
           props.deleteRecord(props.record._id);
-        }}
-      >
-        Delete
-      </a>
+      }}>Delete</Link>
+
     </td>
   </tr>
 );
@@ -46,16 +42,17 @@ export default class RecordList extends Component {
 
   // This method will delete a record based on the method
   deleteRecord(id) {
-    const _url = Backend + "delete";
-    axios.delete(_url, { data: id }).then((response) => {
-      console.log(response.data);
-    }).catch(error => {
-      console.log(error)
+    axios.delete( Backend + "delete/" + id).then((response) => {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
     });
 
-    this.setState({
+    /*return this.setState({
       record: this.state.records.filter((el) => el._id !== id),
-    });
+    });*/
+    this.props.history.push("/");
   }
 
   // This method will map out the users on the table
